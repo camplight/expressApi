@@ -1,0 +1,26 @@
+{
+  "author": "Boris Filipov",
+  "name": "expressApi",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "index.js",
+  "dependencies": {
+    "nconf": "latest",
+    "underscore" : "latest",
+    "backbone": "latest",
+    "mongojs": "latest",
+    "express": "latest",
+    "connect-mongo": "latest",
+    "glob": "latest"
+  },
+  "devDependencies": {
+    "jasmine-node": "latest",
+    "api-easy": "latest"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

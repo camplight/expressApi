@@ -1,0 +1,7 @@
+{
+  "database": {
+    "name": "demo"
+  },
+  "port": 3000,
+  "cookie_secret": "demo-development"
+}
