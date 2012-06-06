@@ -9,22 +9,22 @@ Backbone.sync = function(method, model, options){
       options.success(resp);
   }
 
-  var store = this.store;
+  var store = global.store.collection(model.collectionName);
   switch(method) {
     case "read":
-    if(model.id)
-      store.findOne({_id: model.id}, options, callback);
-    else
-      store.find(options.pattern || {}, options, callback);
+      if(model.id)
+        store.findOne({_id: model.id}, options, callback);
+      else
+        store.find(options.pattern || {}, options, callback);
     break;
     case "create":
       store.save(model.toJSON(), options, callback);
     break;
     case "update":
-    if(model.id)
-      store.update({_id: model.id}, model.toJSON(), options, callback);
-    else
-      store.update(options.pattern || {}, options.data, options, callback);
+      if(model.id)
+        store.update({_id: model.id}, model.toJSON(), options, callback);
+      else
+        store.update(options.pattern || {}, options.data, options, callback);
     break;
     case "delete":
       store.remove({_id: model.id}, options, function(count){
@@ -35,24 +35,19 @@ Backbone.sync = function(method, model, options){
       });
     break;
   }
+  return ;
 };
 
-exports.Model = function(attributes, options){
-  Backbone.Model.call(this, attributes, options);
-}
-_.extend(exports.Model.prototype, Backbone.Model, {
-});
-exports.Model.extend = function(obj){
-  var result = Backbone.Model.extend(obj);
-  result.store = function(){
+exports.Model = Backbone.Model.extend({
+  idAttribute: "_id"
+},{
+  store : function(){
     return global.store.collection(this.prototype.collectionName);
   }
-  return result;
-}
-
-exports.Collection = function(models, options){
-  Backbone.Collection.call(this, models, options);
-}
-_.extend(exports.Collection.prototype, Backbone.Collection, {
 });
-exports.Collection.extend = exports.Model.extend;
+
+exports.Collection = Backbone.Collection.extend({},{
+  store : function(){
+    return global.store.collection(this.prototype.collectionName);
+  }
+});
