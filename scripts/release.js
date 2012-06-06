@@ -9,5 +9,6 @@ cd(__dirname+"/../");
 exec("git flow release start "+newVersion);
 sed('-i', 'version: '+p.version, 'version: '+newVersion, "package.json");
 exec("git commit -am '"+newVersion+" release'");
-//exec("git flow release finish "+newVersion);
-//exec("npm publish");
+exec("git flow release publish "+newVersion);
+exec("npm publish");
+exec("git flow release finish -F -p "+newVersion);
