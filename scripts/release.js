@@ -12,7 +12,7 @@ if(exec("git flow release start "+newVersion).code != 0){
 }
 
 // TODO find out how to trap errors from sed bellow
-sed('-i', '"version": "'+p.version+'"', '"version": "'+newVersion+'"', "package.json").code != 0)
+sed('-i', '"version": "'+p.version+'"', '"version": "'+newVersion+'"', "package.json");
 
 if(exec("git commit -am '"+newVersion+" release'").code != 0){
   echo("Error: failed to commit version bump");
