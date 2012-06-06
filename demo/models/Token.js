@@ -15,13 +15,19 @@ var Token = module.exports = Base.extend({
   findByMessage: function(message, options){
     Token.store().findOne({value: message}, function(err, doc){
       if(err) { options.error(err); return; }
-      options.success(doc);
+      if(doc != null)
+        options.success(new Token(doc));
+      else
+        options.success(null);
     });
   },
   deleteByMessage: function(message, options){
     Token.store().remove({value: message}, {multi: false}, function(err, count){
-      if(err || count == 0){ options.error(err || "not found"); return; }
-      options.success(true);
+      if(err){ options.error(err); return; }
+      if(count == 1)
+        options.success(true);
+      else
+        options.success(false);
     });
   }
 });
