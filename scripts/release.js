@@ -3,6 +3,7 @@ require('shelljs/global');
 var p = require("../package.json");
 var newVersion = p.version.split(".");
 newVersion[2] = (parseInt(newVersion[2])+1).toString();
+newVersion = newVersion.join(".");
 
 cd(__dirname+"/../");
 exec("git flow release start "+newVersion);
