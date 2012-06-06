@@ -55,13 +55,8 @@ to use Model follow Backbone:
     var instance = new MyModel({ property1: "value1" });
 
     // passing 'null' as first argument should notify Backbone to store all properties
-    instance.save(null, {
-      success: function(model){
-        // instance == model
-      },
-      error: function(model, err) {
-
-      }
+    instance.save(function(err, model){
+      // if there isn't error model == instance, otherwise err is not null
     });
 
 
@@ -72,6 +67,10 @@ to use Model follow Backbone:
 - addActions({} or ActionsClass)
 
 ## BackboneMongo.Model ##
+
+- save(attributes, options) or save(function(err, model){ ... }); or save(attributes, function(err, model){ ... })
+- destroy(options) or destroy(function(err, model){ ... });
+- fetch(options) or fetch(function(err, model){ ... });
 
 ## BackboneMongo.Collection ##
 
