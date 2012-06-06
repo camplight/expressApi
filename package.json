@@ -17,7 +17,8 @@
   },
   "devDependencies": {
     "jasmine-node": "latest",
-    "api-easy": "latest"
+    "api-easy": "latest",
+    "shelljs": "latest"
   },
   "optionalDependencies": {},
   "engines": {
