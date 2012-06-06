@@ -2,6 +2,7 @@ var mode = process.env.NODE_ENV || "development";
 var nconf = require('nconf').argv().env().file({ file: __dirname+'/config/'+mode+'.json' });
 
 var app = require("expressApi");
+var Token = require("./models/Token");
 
 app.configure(function(){
   app.useExpressApiMiddleware({
@@ -34,6 +35,7 @@ var echoActionsInstance = new EchoActions({
 echoActionsInstance.registerActions(app);
 app.get("/other/:message", echoActionsInstance.getMessage);
 
+
 app.addActions({
   "GET /": function(req, res, next){
     res.result("Welcome to expressApi");
@@ -46,7 +48,22 @@ app.addActions({
     function(req, res, next){
       res.result(res.version);
     }
-  ]
+  ],
+  "POST /token": function(req, res, next) {
+    var token = new Token(req.body);
+    token.save(null, {
+      success: function(){
+        res.result(token);
+      },
+      error: res.error
+    });
+  },
+  "POST /clear": function(req, res, next){
+    app.store.collection(Token.prototype.collectionName).remove({},{multi: true}, function(err, count){
+      if(err) { res.error(err); return; }
+      res.result(count);
+    });
+  }
 });
 
 app.listen(nconf.get("port"), function(){

@@ -15,4 +15,14 @@ suite.discuss('When using awesome API')
       var version = require("../package.json").version;
       assert.equal(body, JSON.stringify({result: version}));
     })
+  .next()
+  .post("/token", {value: "test"})
+    .expect(200)
+    .expect("should return token", function(err, res, body){
+      var result = JSON.parse(body).result;
+      assert.equal(result.value, "test");
+      assert.isString(result._id);
+    })
+  .post("/clear", {})
+    .expect(200)
 .export(module);

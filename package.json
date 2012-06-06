@@ -1,7 +1,7 @@
 {
   "author": "Boris Filipov",
   "name": "expressApi",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "url": ""
   },
@@ -21,6 +21,9 @@
     "shelljs": "latest"
   },
   "optionalDependencies": {},
+  "scripts": {
+    "test": "node ./tests/start.js"
+  },
   "engines": {
     "node": "*"
   }
