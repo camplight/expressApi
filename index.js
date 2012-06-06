@@ -11,7 +11,7 @@ app.useExpressApiMiddleware = function(options){
   
   var cookie_secret = options.cookie_secret;
   var dbname = options.dbname;
-  var store = global.store = mongojs.connect(dbname);
+  var store = app.store = global.store = mongojs.connect(dbname);
 
   app.use(express.cookieParser());
   app.use(express.session({

@@ -21,6 +21,9 @@
     "shelljs": "latest"
   },
   "optionalDependencies": {},
+  "scripts": {
+    "test": "node ./tests/start.js"
+  },
   "engines": {
     "node": "*"
   }

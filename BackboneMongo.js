@@ -21,17 +21,20 @@ Backbone.sync = function(method, model, options){
       store.save(model.toJSON(), options, callback);
     break;
     case "update":
-      if(model.id)
-        store.update({_id: model.id}, model.toJSON(), options, callback);
-      else
-        store.update(options.pattern || {}, options.data, options, callback);
+      var updateData = model.toJSON();
+      store.update({_id: model.id}, updateData, options, function(err, count){
+        if(err)
+          options.error(err);
+        else
+          options.success(updateData);
+      });
     break;
     case "delete":
-      store.remove({_id: model.id}, options, function(count){
-        if(count == 1)
-          options.success();
+      store.remove({_id: model.id}, options, function(err, count){
+        if(err)
+          options.error(err);
         else
-          options.error("failed to delete "+model.id);
+          options.success();
       });
     break;
   }

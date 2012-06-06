@@ -1,7 +1,7 @@
 {
   "database": {
-    "name": "demo"
+    "name": "expressApi-test"
   },
   "port": 3000,
-  "cookie_secret": "demo-development"
+  "cookie_secret": "expressApi-test"
 }
