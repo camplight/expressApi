@@ -1,4 +1,4 @@
-describe('Backbone.Model', function(){
+describe('Backbone.ModelSugar', function(){
 
   var mongojs = require("mongojs");
   var ObjectId = mongojs.ObjectId;
@@ -11,16 +11,11 @@ describe('Backbone.Model', function(){
   var instance = new Model({value: "test"});
 
   it("should be able to create model", function(done){
-    instance.save(null, {
-      success: function(model){
-        expect(model).toBeDefined();
-        expect(model.get("value")).toBe("test");
-        done();
-      },
-      error: function(model, err){
-        assert.fail();
-        done();
-      }
+    instance.save(function(err, model) {
+      expect(err).toBeNull();
+      expect(model).toBeDefined();
+      expect(model.get("value")).toBe("test");
+      done();
     });
   });
 
@@ -32,16 +27,10 @@ describe('Backbone.Model', function(){
   });
 
   it("should be able to update model", function(done){
-    instance.save({value: "test2"}, {
-      success: function(model) {
-        expect(model.get("value")).toBe("test2");
-        expect(instance.get("value")).toBe("test2");
-        done();
-      },
-      error: function(model, err){
-        assert.fail();
-        done();
-      }
+    instance.save({value: "test2"}, function(err, model){
+      expect(model.get("value")).toBe("test2");
+      expect(err).toBeNull();
+      done();
     });
   });
 
@@ -54,15 +43,10 @@ describe('Backbone.Model', function(){
   });
 
   it("should be able to remove model", function(done){
-    instance.destroy({
-      success: function(model){
-        expect(model).toBeDefined();
-        done();
-      },
-      error: function(model, err) {
-        assert.fail();
-        done();
-      }
+    instance.destroy(function(err, model) {
+      expect(model).toBeDefined();
+      expect(err).toBeNull();
+      done();
     });
   });
 
