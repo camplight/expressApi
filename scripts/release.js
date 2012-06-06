@@ -6,8 +6,27 @@ newVersion[2] = (parseInt(newVersion[2])+1).toString();
 newVersion = newVersion.join(".");
 
 cd(__dirname+"/../");
-exec("git flow release start "+newVersion);
-sed('-i', '"version": "'+p.version+'"', '"version": "'+newVersion+'"', "package.json");
-exec("git commit -am '"+newVersion+" release'");
-exec("git flow release publish "+newVersion);
-exec("npm publish");
+if(exec("git flow release start "+newVersion).code != 0){
+  echo("Error: failed to start release");
+  exit(1);
+}
+if(sed('-i', '"version": "'+p.version+'"', '"version": "'+newVersion+'"', "package.json").code != 0){
+  echo("Error: failed to bump version");
+  exit(1);
+}
+if(exec("git commit -am '"+newVersion+" release'").code != 0){
+  echo("Error: failed to commit version bump");
+  exit(1);
+}
+if(exec("git flow release publish "+newVersion).code != 0){
+  echo("Error: failed to publish release");
+  exit(1);
+}
+if(exec("npm publish").code != 0){
+  echo("Error: failed to publish package in NPM");
+  exit(1);
+}
+if(exec("git flow release finish -m "+newVersion+" "+newVersion).code != 0){
+  echo("Error: failed to finsih release");
+  exit(1);
+}
