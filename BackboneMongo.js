@@ -41,8 +41,56 @@ Backbone.sync = function(method, model, options){
   return ;
 };
 
+var nodejsSave = 
+
 exports.Model = Backbone.Model.extend({
-  idAttribute: "_id"
+  idAttribute: "_id",
+  save: function(input, options) {
+    if(typeof input == "function") {
+      options = input;
+      input = null;
+    }
+    if(typeof options == "function") {
+      var callback = options;
+      options = {
+        success: function(model) {
+          callback(null, model);
+        },
+        error: function(model, err) {
+          callback(err);
+        }
+      }
+    }
+    Backbone.Model.prototype.save.call(this, input, options);
+  },
+  fetch: function(options){
+    if(typeof options == "function") {
+      var callback = options;
+      options = {
+        success: function(model) {
+          callback(null, model);
+        },
+        error: function(model, err) {
+          callback(err);
+        }
+      }
+    }
+    Backbone.Model.prototype.fetch.call(this, options);
+  },
+  destroy: function(options){
+    if(typeof options == "function") {
+      var callback = options;
+      options = {
+        success: function(model) {
+          callback(null, model);
+        },
+        error: function(model, err) {
+          callback(err);
+        }
+      }
+    }
+    Backbone.Model.prototype.destroy.call(this, options);
+  }
 },{
   store : function(){
     return global.store.collection(this.prototype.collectionName);
