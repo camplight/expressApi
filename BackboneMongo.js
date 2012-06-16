@@ -1,4 +1,5 @@
 var Backbone = require("backbone");
+require('backbone-callbacks').attach(Backbone);
 var _ = require("underscore");
 
 Backbone.sync = function(method, model, options){
@@ -41,8 +42,6 @@ Backbone.sync = function(method, model, options){
   return ;
 };
 
-var nodejsSave = 
-
 exports.Model = Backbone.Model.extend({
   idAttribute: "_id",
   save: function(input, options) {
@@ -63,10 +62,10 @@ exports.Model = Backbone.Model.extend({
     }
     Backbone.Model.prototype.save.call(this, input, options);
   },
-  fetch: function(options){
-    if(typeof options == "function") {
-      var callback = options;
-      options = {
+  fetch: function(input, callback){
+    if(typeof input == "function") {
+      callback = input;
+      input = {
         success: function(model) {
           callback(null, model);
         },
@@ -75,12 +74,20 @@ exports.Model = Backbone.Model.extend({
         }
       }
     }
-    Backbone.Model.prototype.fetch.call(this, options);
+    if(typeof input.success == "undefined" && callback)
+      input.success = function(model) {
+        callback(null, model);
+      }
+    if(typeof input.error == "undefined" && callback)
+      input.error = function(model, err) {
+        callback(err);
+      }
+    Backbone.Model.prototype.fetch.call(this, input);
   },
-  destroy: function(options){
-    if(typeof options == "function") {
-      var callback = options;
-      options = {
+  destroy: function(input, callback){
+    if(typeof input == "function") {
+      var callback = input;
+      input = {
         success: function(model) {
           callback(null, model);
         },
@@ -89,7 +96,15 @@ exports.Model = Backbone.Model.extend({
         }
       }
     }
-    Backbone.Model.prototype.destroy.call(this, options);
+    if(typeof input.success == "undefined" && callback)
+      input.success = function(model) {
+        callback(null, model);
+      }
+    if(typeof input.error == "undefined" && callback)
+      input.error = function(model, err) {
+        callback(err);
+      }
+    Backbone.Model.prototype.destroy.call(this, input);
   }
 },{
   store : function(){
