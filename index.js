@@ -29,6 +29,8 @@ app.useExpressApiMiddleware = function(options){
   app.use(express.methodOverride());
   app.use(express.bodyParser());
   app.use(app.router);
+
+  return express;
 }
 
 app.addActions = function(input){
