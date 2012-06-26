@@ -1,4 +1,4 @@
-var Backbone = require("expressApi/BackboneMongo");
+var Backbone = require("../../BackboneMongo");
 
 module.exports = Backbone.Model.extend({
   initialize: function(){

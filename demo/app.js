@@ -1,7 +1,7 @@
 var mode = process.env.NODE_ENV || "development";
 var nconf = require('nconf').argv().env().file({ file: __dirname+'/config/'+mode+'.json' });
 
-var app = require("expressApi");
+var app = require("../index");
 var Token = require("./models/Token");
 
 app.configure(function(){

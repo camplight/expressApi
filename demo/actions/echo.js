@@ -1,4 +1,4 @@
-var Actions = require("expressApi/Actions");
+var Actions = require("../../Actions");
 var Token = require("../models/Token");
 
 module.exports = Actions.extend({

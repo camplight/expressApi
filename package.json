@@ -1,7 +1,7 @@
 {
   "author": "Boris Filipov",
   "name": "expressApi",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": {
     "url": ""
   },
@@ -11,7 +11,7 @@
     "underscore" : "latest",
     "backbone": "latest",
     "mongojs": "latest",
-    "express": "latest",
+    "express": "2.5.10",
     "connect-mongo": "latest",
     "glob": "latest",
     "backbone-callbacks": "latest"
